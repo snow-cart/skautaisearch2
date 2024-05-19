@@ -26,7 +26,7 @@ sequelize.sync().then(() => {
 
 
 // END OF DATABASE DECLARATIONS
-const port = 8000;
+const port = 8005;
 
 const app = express();
 

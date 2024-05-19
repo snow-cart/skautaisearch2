@@ -22,7 +22,7 @@
 		"dev": "concurrently \"npm run dev:react\" \"npm run dev:tailwind\"",
 		"dev:react": "react-scripts start",
 		"dev:tailwind": "npx tailwindcss -i src/index.css -o src/App.css -w",
-		"serve": "serve -s build",
+		"serve": "serve -s build -p 3005",
 		"deploy": "npm run build && npm run serve",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
