@@ -4,6 +4,15 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const fs = require('fs');
+let secret = {}
+fs.readFile('./secret/authCode.txt', 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading file:', err);
+        return;
+    }
+	secret.authCode = data
+});
 
 // DATABASE SHIT: //
 const sqlite3 = require ('sqlite3');
@@ -59,10 +68,15 @@ app.get('/api/test', async (req, res) => {
 	res.json(test);
 })
 app.post('/api/test', async (req, res) => {
-	const test = req.body.data;
-	console.log(test)
-	res.json(test);
-})
+	if (req.body.data[0][1] == secret.authCode) {
+		const data = req.body.data.slice(1);
+  		const newItem = await Item.create(data);
+  		res.json(newItem);
+	}
+	else {
+		res.json("Wrong authCode");
+	}
+});
 
 // END OF TEST API //
 

@@ -8,7 +8,7 @@ export default function App () {
 		let entries = [...formData.entries()];
 		console.log(entries);
 
-		fetch('http://localhost:8000/api/test', {
+		fetch('http://localhost:8005/api/test', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
