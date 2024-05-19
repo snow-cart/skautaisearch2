@@ -11,7 +11,7 @@ fs.readFile('./secret/authCode.txt', 'utf8', (err, data) => {
         console.error('Error reading file:', err);
         return;
     }
-	secret.authCode = data
+	secret.authCode = data.replace(/\n/g, '');
 });
 
 // DATABASE SHIT: //
@@ -23,11 +23,20 @@ const sequelize = new Sequelize({
 });
 
 const Item = sequelize.define('Item', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    author: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    content: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 });
+
 
 sequelize.sync().then(() => {
   console.log('Database & tables synced!');
@@ -64,17 +73,24 @@ app.post('/api/items', async (req, res) => {
 // TEST API: //
 
 app.get('/api/test', async (req, res) => {
-	const test = {title: 'Hello, world!'};
-	res.json(test);
+  	const items = await Item.findAll();
+  	res.json(items);
 })
 app.post('/api/test', async (req, res) => {
-	if (req.body.data[0][1] == secret.authCode) {
-		const data = req.body.data.slice(1);
-  		const newItem = await Item.create(data);
+	if (req.body.authCode == secret.authCode) {
+		const data = req.body.data;
+		console.log("Good authCode", data);
+		const newItem = await Item.create({
+			title: data[0][1],
+			author: data[1][1],
+			content: data[2][1]
+		});
+		console.log(newItem);
   		res.json(newItem);
 	}
 	else {
-		res.json("Wrong authCode");
+    res.status(401).json({ error: "Unauthorized" });
+	console.log(`Wrong authCode`);
 	}
 });
 
