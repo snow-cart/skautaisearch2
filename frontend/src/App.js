@@ -23,7 +23,7 @@ export default function App () {
     	}).catch(err => console.error(err))
 	}
 
-	fetch('http://bonk.lt:8005/api/test')
+	fetch('https://bonk.lt:8005/api/test')
 		.then(response => {
 			if (!response.ok)
 				throw new Error("Fetch response not 'ok'")
