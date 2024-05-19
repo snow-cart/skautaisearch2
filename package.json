@@ -1,0 +1,18 @@
+{
+	"name": "skautaisearch2",
+	"version": "1.0.0",
+	"description": "rework of skautaisearch (other.bonk.lt/skautaisearch)",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm --prefix frontend run build",
+		"dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+		"dev:frontend": "npm --prefix frontend run dev",
+		"dev:backend": "npm --prefix backend run dev",
+		"deploy": "concurrently \"npm run deploy:frontend\" \"npm run deploy:backend\"",
+		"deploy:frontend": "npm --prefix frontend run deploy",
+		"deploy:backend": "npm --prefix backend run start"
+	},
+	"keywords": [],
+	"author": "snow-cart",
+	"license": "ISC"
+}
