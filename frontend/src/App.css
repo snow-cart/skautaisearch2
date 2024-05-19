@@ -562,6 +562,11 @@ video {
   margin-right: auto;
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -598,6 +603,10 @@ video {
 
 .flex-row {
   flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .rounded {
