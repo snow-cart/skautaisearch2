@@ -57,26 +57,10 @@ app.use(morgan('combined'));
 // MAIN API: //
 
 app.get('/api/items', async (req, res) => {
-  const items = await Item.findAll();
-  res.json(items);
-});
-
-app.post('/api/items', async (req, res) => {
-	if (req.body.auth == "authCode") {
-  		const newItem = await Item.create(req.body.data);
-  		res.json(newItem);
-	}
-});
-
-// END OF MAIN API //
-
-// TEST API: //
-
-app.get('/api/test', async (req, res) => {
   	const items = await Item.findAll();
   	res.json(items);
 })
-app.post('/api/test', async (req, res) => {
+app.post('/api/items', async (req, res) => {
 	if (req.body.authCode == secret.authCode) {
 		const data = req.body.data;
 		console.log("Good authCode", data);
@@ -92,6 +76,14 @@ app.post('/api/test', async (req, res) => {
     res.status(401).json({ error: "Unauthorized" });
 	console.log(`Wrong authCode`);
 	}
+});
+
+// END OF MAIN API //
+
+// TEST API: //
+
+app.get('/api/test', async (req, res) => {
+	res.json("Hello, world!")
 });
 
 // END OF TEST API //

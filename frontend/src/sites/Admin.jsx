@@ -1,4 +1,4 @@
-import './../App.css';
+import './App.css';
 
 // import { Items } from './components/Items.jsx';
 
@@ -14,7 +14,7 @@ export default function Admin () {
 				'authCode': authCode,
 				'data': data
 			});
-		fetch('http://bonk.lt:8005/api/test', {
+		fetch('http://bonk.lt:8005/api/items', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export default function Admin () {
     	}).catch(err => console.error(err))
 	}
 
-	fetch('http://bonk.lt:8005/api/test')
+	fetch('http://bonk.lt:8005/api/items')
 		.then(response => {
 			if (!response.ok)
 				throw new Error("Fetch response not 'ok'")
