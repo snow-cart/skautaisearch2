@@ -7,7 +7,7 @@ export default function Home () {
 
 
 	useEffect(() => {
-		fetch('http://bonk.lt/api/items')
+		fetch('https://bonk.lt/api/items')
 		.then(response => {
 			if (!response.ok)
 				throw new Error("Fetch response not 'ok'")
