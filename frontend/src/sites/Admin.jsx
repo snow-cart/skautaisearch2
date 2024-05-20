@@ -11,7 +11,7 @@ export default function Admin () {
 				'authCode': authCode,
 				'data': data
 			});
-		fetch('https://bonk.lt/api/items', {
+		fetch('https://bonk.lt/api/items/add', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ export default function Admin () {
 
 	const [data, setData] = useState([]);
 	useEffect(() => {
-		fetch('https://bonk.lt/api/items')
+		fetch('https://bonk.lt/api/items/all')
 		.then(response => {
 			if (!response.ok)
 				throw new Error("Fetch response not 'ok'")

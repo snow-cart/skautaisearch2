@@ -1,13 +1,13 @@
 import Cards from "../components/Card";
 import { useState, useEffect } from "react";
 
-export default function Home () {
+export default function SearchElement () {
 
 	const [data, setData] = useState([]);
 
 
 	useEffect(() => {
-		fetch('https://bonk.lt/api/items/all')
+		fetch('https://bonk.lt/api/items')
 		.then(response => {
 			if (!response.ok)
 				throw new Error("Fetch response not 'ok'")
@@ -22,9 +22,7 @@ export default function Home () {
 
 	return (
 		<div className="flex flex-col w-vw h-svh">
-			<div className="mx-auto my-8">
-				<a href="/" className="underline">Homepage</a> WIP, here's <a href="/admin" className="underline">Admin UI</a>
-			</div>
+
 			<Cards data={data}/>
 		</div>
 	)

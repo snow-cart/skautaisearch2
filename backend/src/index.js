@@ -16,7 +16,7 @@ fs.readFile('./secret/authCode.txt', 'utf8', (err, data) => {
 
 // DATABASE SHIT: //
 const sqlite3 = require ('sqlite3');
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, Op } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite'
@@ -56,11 +56,28 @@ app.use(morgan('combined'));
 
 // MAIN API: //
 
-app.get('/api/items', cors(), async (req, res) => {
+app.get('/api/items/all', cors(), async (req, res) => {
   	const items = await Item.findAll();
   	res.json(items);
 })
-app.post('/api/items', cors(), async (req, res) => {
+
+app.get('/api/items/search', cors(), async (req, res) => {
+	const searchQuery = {
+		[Op.and]: req.body.searchQuery.split(" ").map(word => ({
+			content: {
+				[Op.like]: `%${word}%`
+			}
+		}))
+	};
+  	const items = await Item.findAll({
+		where: searchQuery
+	}).catch(err => {
+			console.error('Error searching records:', err);
+		});
+  	res.json(items);
+})
+
+app.post('/api/items/add', cors(), async (req, res) => {
 	if (req.body.authCode == secret.authCode) {
 		const data = req.body.data;
 		console.log("Good authCode", data);
@@ -77,6 +94,23 @@ app.post('/api/items', cors(), async (req, res) => {
 	console.log(`Wrong authCode`);
 	}
 });
+app.post('/api/items/remove', cors(), async (req, res) => {
+	if (req.body.authCode == secret.authCode) {
+		const id = req.body.id;
+		Item.destroy({
+			where: {
+				id: 1
+			}
+		}).catch(err => {
+  			console.error('Error deleting record:', err);
+		});
+		console.log(`Deleted item nr. ${id}`);
+	}
+	else {
+		res.status(401).json({ error: "Unauthorized" });
+		console.log(`Wrong authCode`);
+	}
+})
 
 // END OF MAIN API //
 
