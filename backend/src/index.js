@@ -56,11 +56,11 @@ app.use(morgan('combined'));
 
 // MAIN API: //
 
-app.get('/api/items', async (req, res) => {
+app.get('/api/items', cors(), async (req, res) => {
   	const items = await Item.findAll();
   	res.json(items);
 })
-app.post('/api/items', async (req, res) => {
+app.post('/api/items', cors(), async (req, res) => {
 	if (req.body.authCode == secret.authCode) {
 		const data = req.body.data;
 		console.log("Good authCode", data);
