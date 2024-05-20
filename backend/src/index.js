@@ -99,7 +99,7 @@ app.post('/api/items/remove', cors(), async (req, res) => {
 		const id = req.body.id;
 		Item.destroy({
 			where: {
-				id: 1
+				id: id
 			}
 		}).catch(err => {
   			console.error('Error deleting record:', err);
