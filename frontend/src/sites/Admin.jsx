@@ -1,6 +1,7 @@
+import Cards from './../components/Card';
+import { useState, useEffect } from "react";
+
 export default function Admin () {
-
-
 	function handleSubmit () {
 		let formData = new FormData (document.querySelector("form"));
 		let entries = [...formData.entries()];
@@ -19,37 +20,20 @@ export default function Admin () {
     	}).catch(err => console.error(err))
 	}
 
-	fetch('http://bonk.lt:8005/api/items')
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		fetch('http://bonk.lt:8005/api/items')
 		.then(response => {
 			if (!response.ok)
 				throw new Error("Fetch response not 'ok'")
 			return response.json();
 		})
-		.then(data => {
-			console.log(data);
-			renderContent(data);
+		.then(fetchData => {
+			console.log("Fetched data,", fetchData);
+			setData(fetchData);
 		})
 		.catch(error => console.error(error));
-
-
-
-	function renderContent(data){
-		let elementHTMLs = ``;
-		for (let i in data) {
-			console.log(data[i]);
-			const title = data[i].title;
-			const author = data[i].author;
-			const content = data[i].content
-
-			elementHTMLs += `
-			<div>
-				The title is ${title}, author is ${author} and content is:
-				${content} 
-			</div>`
-		}
-		console.log(elementHTMLs);
-		document.getElementById("storedItems").innerHTML=elementHTMLs
-	}
+	}, []);
 
 	return (
 	<div className='flex flex-col'>
@@ -63,8 +47,7 @@ export default function Admin () {
 			<input placeholder='Autorius...' type="text" name="author" className='h-6 w-80 py-3'/><br/>
 			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 py-2'/><br/>
 		</form>
-		<div id="storedItems">
-		</div>
+		<Cards data={data} admin={true}/>
 	</div>
 	);
 }
