@@ -6,15 +6,17 @@ export default function SearchElement () {
 	const [data, setData] = useState([]);
 
 	function search(searchQuery) {
+
+		let body=JSON.stringify({
+			'searchQuery': searchQuery
+		});
 	
 		fetch('https://bonk.lt/api/items/search', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: {
-				'searchQuery': `${searchQuery}`
-			}
+			body: body
     	})
 		.then(response => {
 			if (!response.ok)
