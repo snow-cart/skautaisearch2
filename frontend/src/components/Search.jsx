@@ -8,7 +8,7 @@ export default function SearchElement () {
 	function search(searchQuery) {
 	
 		fetch('https://bonk.lt/api/items/search', {
-			method: 'GET',
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},

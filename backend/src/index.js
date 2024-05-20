@@ -61,7 +61,7 @@ app.get('/api/items/all', cors(), async (req, res) => {
   	res.json(items);
 })
 
-app.get('/api/items/search', cors(), async (req, res) => {
+app.post('/api/items/search', cors(), async (req, res) => {
 	const searchQuery = {
 		[Op.and]: req.body.searchQuery.split(" ").map(word => ({
 			content: {
