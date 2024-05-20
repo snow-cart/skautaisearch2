@@ -88,9 +88,6 @@ app.get('/api/test', async (req, res) => {
 
 // END OF TEST API //
 
-var privateKey = fs.readFileSync( './secret/cert/privatekey.pem' );
-var certificate = fs.readFileSync( './secret/cert/certificate.pem' );
-https.createServer({
-    key: privateKey,
-    cert: certificate
-}, app).listen(port);
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
