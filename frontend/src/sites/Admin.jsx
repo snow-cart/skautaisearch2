@@ -38,10 +38,6 @@ export default function Admin () {
 
 export function AdminLoggedIn ({authCode}) {
 
-
-
-
-
 	function handleSubmit () {
 		let formData = new FormData (document.querySelector("form"));
 		let data = [...formData.entries()];
@@ -67,11 +63,17 @@ export function AdminLoggedIn ({authCode}) {
 				'Content-Type': 'application/json'
 			},
 			body: body
-    	}).catch(err => console.error(err))
+    	}).then(() => {
+			handleRefresh();
+		}).catch(err => console.error(err))
 	}
 
 	const [data, setData] = useState([]);
 	useEffect(() => {
+		handleRefresh();
+	}, []);
+
+	function handleRefresh() {
 		fetch('https://bonk.lt/api/items/all')
 		.then(response => {
 			if (!response.ok)
@@ -83,7 +85,7 @@ export function AdminLoggedIn ({authCode}) {
 			setData(fetchData);
 		})
 		.catch(error => console.error(error));
-	}, []);
+	}
 
 	return (
 	<div className='flex flex-col'>
@@ -97,7 +99,7 @@ export function AdminLoggedIn ({authCode}) {
 			<div className='h-1'/>
 			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 p-1 rounded'/><br/>
 		</form>
-		<Cards data={data} admin={true} authCode={authCode}/>
+		<Cards data={data} admin={true} authCode={authCode} handleRefresh={handleRefresh}/>
 	</div>
 	);
 }
