@@ -63,9 +63,11 @@ export default function Admin () {
 				<button type="button" onClick={handleSubmit} className='m-1 p-1 px-2 rounded bg-green-400'> Pateikti </button><br/>
 
 			</div>
-			<input placeholder='Pavadinimas...' type="text" name="title" className='h-6 w-80 py-2'/><br/>
-			<input placeholder='Autorius...' type="text" name="author" className='h-6 w-80 py-3'/><br/>
-			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 py-2'/><br/>
+			<input placeholder='Pavadinimas...' type="text" name="title" className='h-8 w-80 p-1 rounded'/><br/>
+			<div className='h-1'/>
+			<input placeholder='Autorius...' type="text" name="author" className='h-8 w-80 p-1 rounded'/><br/>
+			<div className='h-1'/>
+			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 p-1 rounded'/><br/>
 		</form>
 		<Cards data={data} admin={true} authCode={authCode}/>
 	</div>
