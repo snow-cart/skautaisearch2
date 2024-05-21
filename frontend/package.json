@@ -24,7 +24,8 @@
 		"dev:react": "react-scripts start",
 		"dev:tailwind": "npx tailwindcss -i src/index.css -o src/App.css -w",
 		"serve": "serve -s build -p 3005",
-		"deploy": "npm run build && npm run serve",
+		"start": "npm run serve",
+		"deploy": "npm run build && npm run start",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},

@@ -10,7 +10,10 @@
 		"dev:backend": "npm --prefix backend run dev",
 		"deploy": "concurrently \"npm run deploy:frontend\" \"npm run deploy:backend\"",
 		"deploy:frontend": "npm --prefix frontend run deploy",
-		"deploy:backend": "npm --prefix backend run start"
+		"deploy:backend": "npm run start:backend",
+		"start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+		"start:frontend": "npm --prefix frontend run start",
+		"start:backend": "npm --prefix backend run start"
 	},
 	"keywords": [],
 	"author": "snow-cart",
