@@ -33,11 +33,11 @@ export function Card ({ data, admin=false, authCode}) {
 	return(
 		<div className="flex flex-col rounded bg-slate-300 m-3 p-4">
 			<div className="flex flex-row w-full">
-				<div className="font-semibold text-lg mr-auto">{`${title}`}</div>
+				<div className="font-semibold text-lg mr-auto whitespace-nowrap">{`${title}`}</div>
 				{admin && <RemoveBtn itemId={id} className="ml-auto pl-5" authCode={authCode}/>}
 			</div>
-			<div className="font-light text-sm">{`${author}`}</div><br/>
-			<div className="text-base">{`${content}`}</div>
+			<div className="font-light text-sm whitespace-nowrap">{`${author}`}</div><br/>
+			<div className="text-base whitespace-pre">{`${content}`}</div>
 		</div>
 	);
 }
