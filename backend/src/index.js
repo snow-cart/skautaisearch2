@@ -105,7 +105,7 @@ app.post('/api/items/login', cors(), async (req, res) => {
 });
 
 app.post('/api/items/add', cors(), async (req, res) => {
-	authAnddDo(req.body.authCode, async () => {
+	authAndDo(req.body.authCode, async () => {
 			const data = req.body.data;
 			console.log("Good authCode", data);
 			const newItem = await Item.create({
