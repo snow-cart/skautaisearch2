@@ -19,5 +19,8 @@
 	},
 	"keywords": [],
 	"author": "snow-cart",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"@tailwindcss/forms": "^0.5.7"
+	}
 }
