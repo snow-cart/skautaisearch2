@@ -23,15 +23,18 @@ function RemoveBtn ({ itemId, className, authCode }) {
 	)
 }
 
-export function Card ({ data, admin=false, authCode}) {
+export function Card ({ data, admin=false, authCode="", className=""}) {
 	const id = data.id;
 	const title = data.title;
 	const author = data.author;
 	const content = data.content;
 	console.log("Card received: ", title);
 
+
 	return(
-		<div className="flex flex-col rounded bg-slate-300 m-3 p-4">
+		<div className="mx-auto flex flex-row">
+		<div className={`w-[0.5em]`}></div>
+		<div className={className + " flex flex-col rounded bg-slate-300 m-3 p-4"}>
 			<div className="flex flex-row w-full">
 				<div className="font-semibold text-lg mr-auto whitespace-nowrap">{`${title}`}</div>
 				{admin && <RemoveBtn itemId={id} className="ml-auto pl-5" authCode={authCode}/>}
@@ -39,16 +42,20 @@ export function Card ({ data, admin=false, authCode}) {
 			<div className="font-light text-sm whitespace-nowrap">{`${author}`}</div><br/>
 			<div className="text-base whitespace-pre">{`${content}`}</div>
 		</div>
+		<div className={`w-[0.5em]`}></div>
+		</div>
 	);
 }
 
 export default function Cards ({ data, admin=false, authCode}) {
 	console.log("Card collection received: ", data);
 	return (
-		<div className="flex m-5 mb-auto min-w-96">
+		<div className="flex flex-wrap mb-auto w-full">
+			<div className='w-[5vw]'></div>
 			{data.map(element => (
-				<Card data={element} admin={admin} authCode={authCode}/>
+				<Card data={element} admin={admin} authCode={authCode} className="mx-auto"/>
 			))}
+			<div className='w-[5vw]'></div>
 		</div>
 	);
 }
