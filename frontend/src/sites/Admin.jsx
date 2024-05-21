@@ -7,6 +7,18 @@ export default function Admin () {
 	function handleSubmit () {
 		let formData = new FormData (document.querySelector("form"));
 		let data = [...formData.entries()];
+		let emptyField = false;
+		let emptyFields = [];
+		for (let i=0; i<data.length; i++) {
+		 	if (data[i][1]==='') {
+				emptyField = true;
+				emptyFields.push(i);
+			}
+		}
+		if (emptyField===true) {
+			console.error("Empty fields", emptyFields);
+			return -1;
+		}
 		let body = JSON.stringify({
 				'authCode': authCode,
 				'data': data
@@ -44,6 +56,7 @@ export default function Admin () {
 		<div>
 			<input ref={authCodeRef} placeholder='Slaptasis kodas...' type="password" name="authCode" className='m-auto h-6 w-40 py-2' ></input>
 			<button type='button' onClick={handleAuth}>O</button>
+
 		</div>
 		<form className='mx-auto m-4 my-6 bg-slate-300 w-fit p-2 rounded'>
 			<div className='flex flex-row'>
