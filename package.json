@@ -4,7 +4,9 @@
 	"description": "rework of skautaisearch (other.bonk.lt/skautaisearch)",
 	"main": "index.js",
 	"scripts": {
-		"build": "npm --prefix frontend run build",
+		"build": "npm run build:frontend && npm run build:backend",
+		"build:frontend": "npm --prefix frontend run build",
+		"build:backend": "",
 		"dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
 		"dev:frontend": "npm --prefix frontend run dev",
 		"dev:backend": "npm --prefix backend run dev",
