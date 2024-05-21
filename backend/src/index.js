@@ -105,6 +105,7 @@ app.post('/api/items/remove', cors(), async (req, res) => {
   			console.error('Error deleting record:', err);
 		});
 		console.log(`Deleted item nr. ${id}`);
+		res.status(200).json({ msg: `Removed card with id ${id}`});
 	}
 	else {
 		res.status(401).json({ error: "Unauthorized" });

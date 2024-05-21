@@ -1,6 +1,6 @@
 function RemoveBtn ({ itemId, className, authCode }) {
 	function handleClick(){
-		console.log("(fake) Removing card with id ", itemId);
+		console.log("Removing card with id ", itemId);
 
 		let body = JSON.stringify({
 			'authCode': authCode,
@@ -13,6 +13,8 @@ function RemoveBtn ({ itemId, className, authCode }) {
 				'Content-Type': 'application/json'
 			},
 			body: body
+		}).then( () => {
+			console.log("Removed card with id ", itemId)
 		}).catch(err => console.error(err))
 	}
 
