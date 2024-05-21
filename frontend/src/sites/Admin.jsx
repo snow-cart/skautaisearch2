@@ -42,15 +42,31 @@ export function AdminLoggedIn ({authCode}) {
 		let formData = new FormData (document.querySelector("form"));
 		let data = [...formData.entries()];
 		let emptyField = false;
-		let emptyFields = [];
+		let emptyFieldIndexes = [];
+		let emptyFieldStr = `Found empty input fields in`;
 		for (let i=0; i<data.length; i++) {
 		 	if (data[i][1]==='') {
 				emptyField = true;
-				emptyFields.push(i);
+				emptyFieldIndexes.push(i);
+				switch(i) {
+					case 0:
+						emptyFieldStr+=` title,`;
+						break;
+					case 1:
+						emptyFieldStr+=` author,`;
+						break;
+					case 2:
+						emptyFieldStr+=` content,`;
+						break;
+					default:
+						emptyFieldStr+=` error,`;
+				}
 			}
 		}
+		emptyFieldStr = emptyFieldStr.slice(0, -1);
 		if (emptyField===true) {
-			console.error("Empty fields", emptyFields);
+			console.error(emptyFieldStr);
+			alert(emptyFieldStr);
 			return -1;
 		}
 		let body = JSON.stringify({
