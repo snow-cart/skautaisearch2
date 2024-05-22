@@ -89,6 +89,12 @@ export function AdminLoggedIn ({authCode}) {
 		handleRefresh();
 	}, []);
 
+	const [isSearchToggle, __setSearchToggle] = useState(false);
+
+	function setSearchToggle () {
+		__setSearchToggle( !isSearchToggle );
+	}
+
 	function handleRefresh() {
 		fetch('https://bonk.lt/api/items/all')
 		.then(response => {
@@ -104,7 +110,7 @@ export function AdminLoggedIn ({authCode}) {
 	}
 
 	return (
-	<div className='flex flex-col'>
+	<div className='flex flex-col fixed top-0 right-0 w-full'>
 		<form className='mx-auto m-4 my-6 bg-slate-300 w-fit p-2 rounded'>
 			<div className='flex flex-row'>
 				<button type="button" onClick={handleSubmit} className='m-1 p-1 px-2 rounded bg-green-400'> Pateikti </button><br/>
@@ -115,7 +121,17 @@ export function AdminLoggedIn ({authCode}) {
 			<div className='h-1'/>
 			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 p-1 rounded'/><br/>
 		</form>
-		<Cards data={data} admin={true} authCode={authCode} handleRefresh={handleRefresh}/>
+
+		<div className="fixed top-10 right-10">
+			<label>toggleSearch </label>
+			<input onClick={setSearchToggle} type="checkbox" />
+		</div>
+  		
+		{isSearchToggle
+			? (<></>)
+			: (<Cards data={data} admin={true} authCode={authCode} handleRefresh={handleRefresh}/>)
+		}
+		
 	</div>
 	);
 }
