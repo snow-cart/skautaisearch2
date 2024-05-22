@@ -61,9 +61,11 @@ const Item = sequelize.define('Item', {
 });
 
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log('Database & tables synced!');
-});
+}).catch(err => {
+    console.error('Error recreating database tables:', err);
+  });
 
 
 // END OF DATABASE DECLARATIONS
