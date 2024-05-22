@@ -20,12 +20,10 @@ const { Sequelize, DataTypes, Op } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite',
-  dialectOptions: {
-    mode: 'full', // Enable full mode to use FTS5
-    supportBigNumbers: true,
-    bigNumberStrings: true,
-  },
 });
+
+sequelize.query("PRAGMA journal_mode = WAL; PRAGMA page_size = 4096; PRAGMA cache_size = -2000; PRAGMA synchronous = NORMAL; PRAGMA temp_store = MEMORY; PRAGMA journal_mode = WAL; PRAGMA wal_autocheckpoint = 1800; PRAGMA wal_checkpoint(TRUNCATE); PRAGMA locking_mode = NORMAL; PRAGMA foreign_keys = ON; PRAGMA mmap_size = 30000000000; PRAGMA threads = 16; PRAGMA page_size = 4096; PRAGMA recursive_triggers = ON; PRAGMA secure_delete = OFF; PRAGMA auto_vacuum = FULL; PRAGMA encoding = 'UTF-8'; PRAGMA foreign_keys = ON; PRAGMA wal_checkpoint = TRUNCATE; PRAGMA synchronous = NORMAL;");
+
 
 const Item = sequelize.define('Item', {
     title: {
@@ -61,7 +59,7 @@ const Item = sequelize.define('Item', {
 });
 
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync().then(() => {
   console.log('Database & tables synced!');
 }).catch(err => {
     console.error('Error recreating database tables:', err);
