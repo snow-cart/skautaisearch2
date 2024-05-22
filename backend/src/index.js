@@ -85,22 +85,24 @@ app.get('/api/items/all', cors(), async (req, res) => {
 })
 
 app.post('/api/items/search', cors(), async (req, res) => {
-
-	const searchQuery = {
-        [Op.and]: req.body.searchQuery.split(" ")
-			.map(word => ({
-				'$search$': {
-					[Op.like]: `%${word}%`
-				}
-        	}))
+    const searchQuery = req.body.searchQuery.trim(); // Assuming searchQuery is a string
+    if (!searchQuery) {
+        return res.status(400).json({ error: 'Search query is required' });
     }
-  	const items = await Item.findAll({
-		where: searchQuery,
-		order: [['createdAt', 'DESC']]
-	});
-  	res.json(items);
-})
 
+    try {
+        const items = await Item.findAll({
+            where: sequelize.literal(`MATCH(title, author, content) AGAINST (:query IN BOOLEAN MODE)`),
+            replacements: { query: searchQuery },
+            order: [['createdAt', 'DESC']]
+        });
+        console.log(items);
+        res.json(items);
+    } catch (error) {
+        console.error('Error performing full-text search:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 // END OF PUBLIC API //
 
 // AUTH'ED API: //
