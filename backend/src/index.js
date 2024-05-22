@@ -19,7 +19,12 @@ const sqlite3 = require ('sqlite3');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite'
+  storage: './database.sqlite',
+  dialectOptions: {
+    mode: 'full', // Enable full mode to use FTS5
+    supportBigNumbers: true,
+    bigNumberStrings: true,
+  },
 });
 
 const Item = sequelize.define('Item', {
@@ -35,6 +40,24 @@ const Item = sequelize.define('Item', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    // Define virtual field for FTS
+    search: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        // FTS5 virtual field
+        get() {
+            return `${this.title} ${this.author} ${this.content}`;
+        }
+	}
+}, {
+    // Enable FTS5
+    indexes: [
+        {
+            type: 'FULLTEXT',
+            name: 'Item_search',
+            fields: ['search']
+        }
+    ]
 });
 
 
@@ -62,18 +85,19 @@ app.get('/api/items/all', cors(), async (req, res) => {
 })
 
 app.post('/api/items/search', cors(), async (req, res) => {
+
 	const searchQuery = {
-		[Op.and]: req.body.searchQuery.split(" ").map(word => ({
-			content: {
-				[Op.like]: `%${word}%`
-			}
-		}))
-	};
+        [Op.and]: req.body.searchQuery.split(" ")
+			.map(word => ({
+				'$search$': {
+					[Op.like]: `%${word}%`
+				}
+        	}))
+    }
   	const items = await Item.findAll({
-		where: searchQuery
-	}).catch(err => {
-			console.error('Error searching records:', err);
-		});
+		where: searchQuery,
+		order: [['createdAt', 'DESC']]
+	});
   	res.json(items);
 })
 
