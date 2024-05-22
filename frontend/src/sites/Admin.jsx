@@ -30,7 +30,7 @@ export default function Admin () {
 
 	return (
 		<>
-		<div className="fixed top-10 left-10 p-2 px-3 bg-white rounded-lg border-2">
+		<div className="fixed top-10 right-10 p-2 px-3 bg-white rounded-lg border-2">
 			<a href="/">Home</a>
 		</div>
 		{isLoggedIn 
@@ -127,7 +127,7 @@ export function AdminLoggedIn ({authCode}) {
 			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 p-1 rounded'/><br/>
 		</form>
 
-		<div className="fixed top-10 right-10 p-2 px-3 bg-white rounded-lg border-2">
+		<div className="fixed top-10 right-36 p-2 px-3 bg-white rounded-lg border-2">
 			<label>toggleSearch </label>
 			<input onClick={setSearchToggle} type="checkbox" />
 		</div>

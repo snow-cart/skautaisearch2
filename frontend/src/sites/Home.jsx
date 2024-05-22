@@ -24,7 +24,7 @@ export default function Home () {
 		<div className="mt-24 flex flex-col w-vw h-svh">
 			<Cards data={data}/>
 
-			<div className="fixed top-10 left-10 p-2 px-3 bg-white rounded-lg border-2">
+			<div className="fixed top-10 right-10 p-2 px-3 bg-white rounded-lg border-2">
 				<a href="/admin">Admin</a>
 			</div>
 		</div>
