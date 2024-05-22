@@ -1,7 +1,7 @@
 import Cards from "../components/Card";
 import { useState, useRef } from "react";
 
-export default function SearchElement ({ admin=false, authCode}) {
+export default function SearchElement ({ admin=false, authCode=""}) {
 
 	const [data, setData] = useState([]);
 
