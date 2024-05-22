@@ -2,6 +2,7 @@ import Cards from './../components/Card';
 import { useState, useEffect } from "react";
 import { tryAuth } from '../scripts/auth';
 import Login from '../components/Login';
+import SearchElement from '../components/Search';
 
 export default function Admin () {
 	const [isLoggedIn, setLoggedIn] = useState(false);
@@ -29,6 +30,9 @@ export default function Admin () {
 
 	return (
 		<>
+		<div className="fixed top-10 left-10 p-2 px-3 bg-white rounded-lg border-2">
+			<a href="/">Home</a>
+		</div>
 		{isLoggedIn 
 			? (<AdminLoggedIn authCode={authCode}/>) 
 			: (<Login handleSubmit={handleSubmitLogin}/>)}
@@ -41,6 +45,7 @@ export function AdminLoggedIn ({authCode}) {
 	function handleSubmit () {
 		let formData = new FormData (document.querySelector("form"));
 		let data = [...formData.entries()];
+		console.log(data);
 		let emptyField = false;
 		let emptyFieldIndexes = [];
 		let emptyFieldStr = `Found empty input fields in`;
@@ -110,7 +115,7 @@ export function AdminLoggedIn ({authCode}) {
 	}
 
 	return (
-	<div className='flex flex-col fixed top-0 right-0 w-full'>
+	<div className='flex flex-col w-full h-fit'>
 		<form className='mx-auto m-4 my-6 bg-slate-300 w-fit p-2 rounded'>
 			<div className='flex flex-row'>
 				<button type="button" onClick={handleSubmit} className='m-1 p-1 px-2 rounded bg-green-400'> Pateikti </button><br/>
@@ -122,13 +127,13 @@ export function AdminLoggedIn ({authCode}) {
 			<textarea placeholder='Dainos žodžiai...' type="text" name="content" className='h-96 w-80 p-1 rounded'/><br/>
 		</form>
 
-		<div className="fixed top-10 right-10">
+		<div className="fixed top-10 right-10 p-2 px-3 bg-white rounded-lg border-2">
 			<label>toggleSearch </label>
 			<input onClick={setSearchToggle} type="checkbox" />
 		</div>
   		
 		{isSearchToggle
-			? (<></>)
+			? (<SearchElement admin={true} authCode={authCode}/>)
 			: (<Cards data={data} admin={true} authCode={authCode} handleRefresh={handleRefresh}/>)
 		}
 		
