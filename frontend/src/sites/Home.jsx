@@ -21,11 +21,12 @@ export default function Home () {
 	}, []);
 
 	return (
-		<div className="flex flex-col w-vw h-svh">
-			<div className="mx-auto my-8">
-				<a href="/" className="underline">Homepage</a> WIP, here's <a href="/admin" className="underline">Admin UI</a>
-			</div>
+		<div className="mt-24 flex flex-col w-vw h-svh">
 			<Cards data={data}/>
+
+			<div className="fixed top-10 left-10 p-2 px-3 bg-white rounded-lg border-2">
+				<a href="/admin">Admin</a>
+			</div>
 		</div>
 	)
 }
